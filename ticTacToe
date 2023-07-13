@@ -1,0 +1,233 @@
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TicTacToe implements ActionListener{
+
+    private static String playerOne = " ";
+    private static String playerTwo = " ";
+    private static JComboBox oneComboBox;
+    private static JComboBox twoComboBox;
+    private static int playNum = 0;
+
+    private static String currentPlayer = " ";
+
+    private static JLabel gameName;
+    private static JLabel gameRules;
+    private static JLabel ruleLabel;
+
+    private static JLabel choiceLabel;
+    private static JLabel playerOneLabel;
+    private static JLabel playerTwoLabel;
+
+    private static JButton topLeft;
+    private static JButton topMiddle;
+    private static JButton topRight;
+    private static JButton middleLeft;
+    private static JButton middle;
+    private static JButton middleRight;
+    private static JButton bottomLeft;
+    private static JButton bottomMiddle;
+    private static JButton bottomRight;
+
+    private static JButton reset;
+
+    public static void main(String[] args) {
+       
+        JPanel panel = new JPanel();
+        JFrame frame = new JFrame();
+        
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(panel);
+
+        panel.setLayout(null);
+
+        gameName = new JLabel("TicTacToe");
+        gameName.setBounds(10,20,80,20);
+        panel.add(gameName);
+
+        ruleLabel = new JLabel("Rules:");
+        ruleLabel.setBounds(200, 10, 40, 25);
+        panel.add(ruleLabel);
+
+        gameRules = new JLabel("*Get 3 in a row to win in any direction");
+        gameRules.setBounds(210,25,1000,25);
+        panel.add(gameRules);
+
+        choiceLabel = new JLabel("Choose your letters!");
+        choiceLabel.setBounds(10,50,120,20);
+        panel.add(choiceLabel);
+
+        String [] charChoice = {" ", "X", "O"};
+
+        playerOneLabel = new JLabel("Player One");
+        playerOneLabel.setBounds(10, 80, 80, 20);
+        panel.add(playerOneLabel);
+
+        oneComboBox = new JComboBox(charChoice);
+        oneComboBox.setBounds(10, 100, 80, 20);
+        oneComboBox.addActionListener(new TicTacToe());
+        panel.add(oneComboBox);
+
+        playerTwoLabel = new JLabel("Player Two");
+        playerTwoLabel.setBounds(10, 120, 80, 20);
+        panel.add(playerTwoLabel);
+
+        twoComboBox = new JComboBox(charChoice);
+        twoComboBox.setBounds(10, 140, 80, 20);
+        twoComboBox.addActionListener(new TicTacToe());
+        panel.add(twoComboBox);
+
+        // Call for buttons to be setup!
+        buttonSetup(panel);
+
+        reset = new JButton("Reset");
+        reset.setBounds(300, 300, 100, 100);
+        reset.addActionListener(new TicTacToe());
+        panel.add(reset);
+
+        frame.setVisible(true);
+
+        //image = ImageIO.read(getClass().getResource("C:\Users\11juan\Coding\Java Code\ticTacToe.jpg"));
+        
+        
+    }
+
+    //Setting up the buttons
+    public static void buttonSetup(JPanel panel){
+
+        topLeft = new JButton(" ");
+        topLeft.setBounds(200, 100, 50, 50);
+        topLeft.addActionListener(new TicTacToe());
+        panel.add(topLeft);
+        
+        topMiddle = new JButton(" ");
+        topMiddle.setBounds(255, 100, 50, 50);
+        topMiddle.addActionListener(new TicTacToe());
+        panel.add(topMiddle);
+
+        topRight = new JButton(" ");
+        topRight.setBounds(310, 100, 50, 50);
+        topRight.addActionListener(new TicTacToe());
+        panel.add(topRight);
+
+        middleLeft = new JButton(" ");
+        middleLeft.setBounds(200, 155, 50, 50);
+        middleLeft.addActionListener(new TicTacToe());
+        panel.add(middleLeft);
+
+        middle = new JButton(" ");
+        middle.setBounds(255, 155, 50, 50);
+        middle.addActionListener(new TicTacToe());
+        panel.add(middle);
+
+        middleRight = new JButton(" ");
+        middleRight.setBounds(310, 155, 50, 50);
+        middleRight.addActionListener(new TicTacToe());
+        panel.add(middleRight);
+
+        bottomLeft = new JButton(" ");
+        bottomLeft.setBounds(200, 210, 50, 50);
+        bottomLeft.addActionListener(new TicTacToe());
+        panel.add(bottomLeft);
+
+        bottomMiddle = new JButton(" ");
+        bottomMiddle.setBounds(255, 210, 50, 50);
+        bottomMiddle.addActionListener(new TicTacToe());
+        panel.add(bottomMiddle);
+
+        bottomRight = new JButton(" ");
+        bottomRight.setBounds(310, 210, 50, 50);
+        bottomRight.addActionListener(new TicTacToe());
+        panel.add(bottomRight);
+    }
+
+    //An action is performed!
+    public void actionPerformed(ActionEvent e){
+
+        Object source = e.getSource();
+
+        if (source instanceof JButton){
+            //String button = e.getActionCommand();
+
+            if(source == topLeft){
+                topLeft.setText(getCurrentPlayer());
+            } else if(source == topMiddle){
+                topMiddle.setText(getCurrentPlayer());
+            } else if(source == topRight){
+                topRight.setText(getCurrentPlayer());
+            } else if(source == middleLeft){
+                middleLeft.setText(getCurrentPlayer());
+            } else if(source == middle){
+                middle.setText(getCurrentPlayer());
+            } else if(source == middleRight){
+                middleRight.setText(getCurrentPlayer());
+            } else if(source == bottomLeft){
+                bottomLeft.setText(getCurrentPlayer());
+            } else if(source == bottomMiddle){
+                bottomMiddle.setText(getCurrentPlayer());
+            } else if(source == bottomRight){
+                bottomRight.setText(getCurrentPlayer());
+            } else if(source == reset){
+                resetGame();
+            }
+        } else if (source instanceof JComboBox){
+            if (source == oneComboBox){
+                JComboBox cb = (JComboBox) source;
+                playerOne = (String)cb.getSelectedItem();
+                System.out.println(playerOne);
+            } else if (source == twoComboBox){
+                JComboBox cb = (JComboBox) source;
+                playerTwo = (String)cb.getSelectedItem();
+                System.out.println(playerTwo);
+            }
+        }
+    }
+
+    public static String getCurrentPlayer(){
+        if (playNum % 2 == 0){
+            currentPlayer = playerOne;
+            playNum++;
+        } else {
+            currentPlayer = playerTwo;
+            playNum++;
+        }
+
+        return currentPlayer;
+    }
+
+    //Resetting the game!
+    public static void resetGame(){
+
+        //Resetting game boxes
+        topLeft.setText(" ");
+        topMiddle.setText(" ");
+        topRight.setText(" ");
+        middleLeft.setText(" ");
+        middle.setText(" ");
+        middleRight.setText(" ");
+        bottomLeft.setText(" ");
+        bottomMiddle.setText(" ");
+        bottomRight.setText(" ");
+
+        //Resetting player choices
+        oneComboBox.setSelectedIndex(0);
+        twoComboBox.setSelectedIndex(0);
+
+        //Resetting play number!
+        playNum = 0;
+
+    }
+}
